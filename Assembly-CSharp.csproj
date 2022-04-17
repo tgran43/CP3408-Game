@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{5A908BD0-251F-D95C-796E-F4A88630D19C}</ProjectGuid>
+    <ProjectGuid>{5B2DF5AF-F390-C704-34C9-BB068232568C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -57,6 +57,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Drive.cs" />
+    <Compile Include="Assets\Scripts\CameraMovement.cs" />
+    <Compile Include="Assets\UnderwaterFantasy\Scripts\Perspective2DSortMode.cs" />
+    <Compile Include="Assets\UnderwaterFantasy\Scripts\Done_BGScroller.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
