@@ -16,6 +16,11 @@ public class Health : MonoBehaviour
 
     public void UpdateHealth()
     {
+        if (playerHealth <= 0)
+        {
+            Debug.Log("Player has dieded...");
+        }
+
         for (int i = 0; i < hearts.Length; i++)
         {
             if (i < playerHealth)
