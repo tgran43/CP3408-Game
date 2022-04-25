@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using TMPro;
 
 public class Obstacle : MonoBehaviour
 {
-
+    
     public GameObject spikeGameObject;
     public GameObject jellyFishGameObject;
     public GameObject swordFishGameObject;
@@ -23,16 +24,27 @@ public class Obstacle : MonoBehaviour
     public float minY;
 
     public float timeBetweenSpawn;
+    public float timeBetweenScore;
 
     private float spawnTime;
+    private float scoreTime;
+
     private int numObstacles = 4;
-    
+    private int score;
+    public TextMeshProUGUI scoreText;
+
+    void Start()
+    {
+        score = 0;
+        scoreText.text = "Score: " + score;
+    }
     
     // Start is called before the first frame update
     void Spawn()
     {
         float randomX = Random.Range(minX, maxX);
         float randomY = Random.Range(minY, maxY);
+        //int randomObstacle = 2;
         int randomObstacle = Random.Range(numObstacles - numObstacles + 1, numObstacles + 2);
         float swordX;
         float swordY;
@@ -82,7 +94,13 @@ public class Obstacle : MonoBehaviour
             Spawn();
             spawnTime = Time.time + timeBetweenSpawn;
         }
-        
+        if (Time.time > scoreTime)
+        {
+            scoreTime = Time.time + timeBetweenScore;
+            score += 1;
+            scoreText.text = "Score: " + score;
+        }
+
     }
 
     IEnumerator swordfishSpawn(float swordY)
