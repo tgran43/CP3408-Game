@@ -1,14 +1,11 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
+using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
-using TMPro;
 
 public class Obstacle : MonoBehaviour
 {
-    
+
     public GameObject spikeGameObject;
     public GameObject jellyFishGameObject;
     public GameObject swordFishGameObject;
@@ -26,26 +23,30 @@ public class Obstacle : MonoBehaviour
     public float timeBetweenSpawn;
     public float timeBetweenScore;
 
+
     private float spawnTime;
     private float scoreTime;
 
     private int numObstacles = 4;
     private int score;
+    private int seconds;
+    private int minutes;
     public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI timerText;
 
     void Start()
     {
         score = 0;
         scoreText.text = "Score: " + score;
     }
-    
+
     // Start is called before the first frame update
     void Spawn()
     {
         float randomX = Random.Range(minX, maxX);
         float randomY = Random.Range(minY, maxY);
         //int randomObstacle = 2;
-        int randomObstacle = Random.Range(numObstacles - numObstacles + 1, numObstacles + 2);
+        int randomObstacle = Random.Range(numObstacles - numObstacles + 1, numObstacles + 1);
         float swordX;
         float swordY;
         float swordZ;
@@ -58,12 +59,12 @@ public class Obstacle : MonoBehaviour
             //Downwards
             if (upOrDown == 1)
             {
-                Instantiate(spikeGameObject, transform.position + new Vector3(randomX, 48, 0), transform.rotation);
+                Instantiate(spikeGameObject, transform.position + new Vector3(randomX, 34, 0), transform.rotation);
             }
             //Upwards
             else
             {
-                Instantiate(spikeGameObject, transform.position + new Vector3(randomX, -48, 0), Quaternion.Euler(0, 0, 180));
+                Instantiate(spikeGameObject, transform.position + new Vector3(randomX, -30, 0), Quaternion.Euler(0, 0, 180));
             }
         }
         //Jellyfish
@@ -77,10 +78,10 @@ public class Obstacle : MonoBehaviour
         }
         else if (randomObstacle == 4)
         {
-            
+
             swordY = player.transform.position.y;
             StartCoroutine(swordfishSpawn(swordY));
-            
+
         }
 
 
@@ -93,13 +94,33 @@ public class Obstacle : MonoBehaviour
         {
             Spawn();
             spawnTime = Time.time + timeBetweenSpawn;
+            timeBetweenSpawn -= 0.05f;
+            if (timeBetweenSpawn < 1)
+            {
+                timeBetweenSpawn = 1;
+            }
         }
         if (Time.time > scoreTime)
         {
             scoreTime = Time.time + timeBetweenScore;
-            score += 1;
+            score += 10;
+            seconds += 1;
             scoreText.text = "Score: " + score;
+            if (seconds == 60)
+            {
+                seconds = 0;
+                minutes += 1;
+            }
+            if (seconds < 10)
+            {
+                timerText.text = "Time: " + minutes + ":0" + seconds;
+            }
+            else
+            {
+                timerText.text = "Time: " + minutes + ":" + seconds;
+            }
         }
+
 
     }
 

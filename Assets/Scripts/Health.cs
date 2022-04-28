@@ -18,7 +18,7 @@ public class Health : MonoBehaviour
     {
         if (playerHealth <= 0)
         {
-            Debug.Log("Player has dieded...");
+            Debug.Log("Player has died...");
         }
 
         for (int i = 0; i < hearts.Length; i++)
@@ -32,5 +32,25 @@ public class Health : MonoBehaviour
                 hearts[i].color = Color.black;
             }
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Obstacle")
+        {
+            HealthDamage();
+        }
+    }
+
+    public void HealthDamage()
+    {
+        playerHealth -= 1;
+        UpdateHealth();
+    }
+
+    public void GainHealth()
+    {
+        playerHealth += 1;
+        UpdateHealth();
     }
 }
