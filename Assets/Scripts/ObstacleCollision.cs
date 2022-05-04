@@ -14,7 +14,7 @@ public class ObstacleCollision : MonoBehaviour
     // Update is called once per frame
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Border")
+        if (collision.tag == "Border" | collision.tag == "Coin")
         {
             Destroy(this.gameObject);
         }

@@ -12,6 +12,7 @@ public class Obstacle : MonoBehaviour
     public GameObject mineGameObject;
     public GameObject player;
     public GameObject manager;
+    public GameObject coin;
     public SpriteRenderer arrow;
 
     public float maxX;
@@ -27,17 +28,19 @@ public class Obstacle : MonoBehaviour
     private float spawnTime;
     private float scoreTime;
 
-    private int numObstacles = 4;
+    private int numObstacles = 5;
     private int score;
     private int seconds;
     private int minutes;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI timerText;
+    public TextMeshProUGUI moneyText;
 
     void Start()
     {
         score = 0;
         scoreText.text = "Score: " + score;
+        
     }
 
     // Start is called before the first frame update
@@ -46,7 +49,7 @@ public class Obstacle : MonoBehaviour
         float randomX = Random.Range(minX, maxX);
         float randomY = Random.Range(minY, maxY);
         //int randomObstacle = 2;
-        int randomObstacle = Random.Range(numObstacles - numObstacles + 1, numObstacles + 1);
+        int randomObstacle = Random.Range(1, numObstacles + 1);
         float swordX;
         float swordY;
         float swordZ;
@@ -82,6 +85,12 @@ public class Obstacle : MonoBehaviour
             swordY = player.transform.position.y;
             StartCoroutine(swordfishSpawn(swordY));
 
+        }
+        else if (randomObstacle == 5)
+        {
+            Instantiate(coin, transform.position + new Vector3(50, randomY, 0), transform.rotation);
+            Instantiate(coin, transform.position + new Vector3(65, randomY, 0), transform.rotation);
+            Instantiate(coin, transform.position + new Vector3(80, randomY, 0), transform.rotation);
         }
 
 
@@ -134,10 +143,14 @@ public class Obstacle : MonoBehaviour
             arrowInstantiate.enabled = true;
             yield return new WaitForSeconds(0.2f);
             arrowInstantiate.enabled = false;
+            
             count++;
         }
+        Destroy(arrowInstantiate);
         Instantiate(swordFishGameObject, transform.position + new Vector3(120, swordY, 0), Quaternion.Euler(0, 180, 0));
 
 
     }
+
+
 }

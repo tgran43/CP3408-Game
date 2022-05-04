@@ -1,17 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Health : MonoBehaviour
 {
     public int playerHealth;
+    private TextMeshProUGUI moneyText;
+    public int coinBalance;
 
     [SerializeField] private Image[] hearts;
 
     private void Start()
     {
         UpdateHealth();
+        moneyText = GameObject.Find("Money").GetComponent<TextMeshProUGUI>();
     }
 
     public void UpdateHealth()
@@ -39,6 +43,11 @@ public class Health : MonoBehaviour
         if (collision.tag == "Obstacle")
         {
             HealthDamage();
+        }
+        if (collision.tag == "Coin")
+        {
+            coinBalance = coinBalance + 1;
+            moneyText.text = "" + coinBalance;
         }
     }
 
