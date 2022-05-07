@@ -9,6 +9,7 @@ public class Health : MonoBehaviour
     public int playerHealth;
     private TextMeshProUGUI moneyText;
     public int coinBalance;
+    public GameObject deathMenuUI;
 
     [SerializeField] private Image[] hearts;
 
@@ -24,6 +25,7 @@ public class Health : MonoBehaviour
     {
         if (playerHealth <= 0)
         {
+            PauseMenu.DeathMenu(deathMenuUI);
             Debug.Log("Player has died...");
         }
 

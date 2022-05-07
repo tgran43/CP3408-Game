@@ -40,7 +40,7 @@ public class Obstacle : MonoBehaviour
     {
         score = 0;
         scoreText.text = "Score: " + score;
-        
+
     }
 
     // Start is called before the first frame update
@@ -51,9 +51,9 @@ public class Obstacle : MonoBehaviour
         //int randomObstacle = 2;
         int randomObstacle = Random.Range(1, numObstacles + 1);
         Debug.Log(randomObstacle);
-        float swordX;
+
         float swordY;
-        float swordZ;
+
         //Debug.Log(randomObstacle);
         //Spawn Spike either facing upwards or downwards
         if (randomObstacle == 1)
@@ -144,7 +144,7 @@ public class Obstacle : MonoBehaviour
             arrowInstantiate.enabled = true;
             yield return new WaitForSeconds(0.2f);
             arrowInstantiate.enabled = false;
-            
+
             count++;
         }
         Destroy(arrowInstantiate);
