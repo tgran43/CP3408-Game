@@ -1,8 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+
+
 
 public class Health : MonoBehaviour
 {
@@ -14,8 +14,10 @@ public class Health : MonoBehaviour
 
     private void Start()
     {
+        coinBalance = PlayerPrefs.GetInt("Coins");
         UpdateHealth();
         moneyText = GameObject.Find("Money").GetComponent<TextMeshProUGUI>();
+        moneyText.text = "" + coinBalance;
     }
 
     public void UpdateHealth()
@@ -44,10 +46,12 @@ public class Health : MonoBehaviour
         {
             HealthDamage();
         }
+
         if (collision.tag == "Coin")
         {
             coinBalance = coinBalance + 1;
             moneyText.text = "" + coinBalance;
+            SaveGame();
         }
     }
 
@@ -57,9 +61,32 @@ public class Health : MonoBehaviour
         UpdateHealth();
     }
 
+    public int CoinBalance()
+    {
+        return coinBalance;
+    }
+
     public void GainHealth()
     {
         playerHealth += 1;
         UpdateHealth();
+    }
+
+    void SaveGame()
+    {
+        PlayerPrefs.SetInt("Coins", coinBalance);
+
+        PlayerPrefs.Save();
+        Debug.Log("Game data saved!");
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+
+            // Flip the value of autoPilot
+            SaveGame();
+        }
     }
 }

@@ -50,6 +50,7 @@ public class Obstacle : MonoBehaviour
         float randomY = Random.Range(minY, maxY);
         //int randomObstacle = 2;
         int randomObstacle = Random.Range(1, numObstacles + 1);
+        Debug.Log(randomObstacle);
         float swordX;
         float swordY;
         float swordZ;
