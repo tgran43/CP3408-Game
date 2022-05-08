@@ -5,9 +5,14 @@ using UnityEngine;
 public class Drive : MonoBehaviour
 {
     // Tank speed
-    public float speed = 10.0f;
+    public float speed;
     // Tank rotation speed
-    public float rotationSpeed = 100.0f;
+    public float rotationSpeed;
+
+    void Start()
+    {
+        speed = PlayerPrefs.GetFloat("Speed");
+    }
 
     void Update()
     {
@@ -15,7 +20,7 @@ public class Drive : MonoBehaviour
         // By default they are mapped to the arrow keys.
         // The value is in the range -1 to 1
         float translation = Input.GetAxis("Vertical") * speed;
-        float rotation = Input.GetAxis("Horizontal") * rotationSpeed;
+        float rotation = Input.GetAxis("Horizontal") * speed;
 
         // Make it move 10 meters per second instead of 10 meters per frame...
         translation *= Time.deltaTime;

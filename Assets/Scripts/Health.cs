@@ -1,6 +1,8 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
+using System;
 
 
 
@@ -10,6 +12,7 @@ public class Health : MonoBehaviour
     private TextMeshProUGUI moneyText;
     public int coinBalance;
     public GameObject deathMenuUI;
+    public int health;
 
     [SerializeField] private Image[] hearts;
 
@@ -19,10 +22,12 @@ public class Health : MonoBehaviour
         UpdateHealth();
         moneyText = GameObject.Find("Money").GetComponent<TextMeshProUGUI>();
         moneyText.text = "" + coinBalance;
+        playerHealth = PlayerPrefs.GetInt("Health");
     }
 
     public void UpdateHealth()
     {
+        health = PlayerPrefs.GetInt("Health");
         if (playerHealth <= 0)
         {
             PauseMenu.DeathMenu(deathMenuUI);
@@ -86,8 +91,6 @@ public class Health : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.T))
         {
-
-            // Flip the value of autoPilot
             SaveGame();
         }
     }

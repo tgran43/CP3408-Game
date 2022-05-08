@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
-    public static bool GameIsPaused = false;
+    private bool GameIsPaused = false;
     public GameObject pauseMenuUI;
     public GameObject deathMenuUI;
     
@@ -20,6 +20,8 @@ public class PauseMenu : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            Debug.Log("jsedhgfkjshbfkjsdh");
+            Debug.Log(GameIsPaused);
             if (GameIsPaused)
             {
                 Resume();
@@ -40,7 +42,6 @@ public class PauseMenu : MonoBehaviour
 
     void Pause()
     {
-        
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         GameIsPaused = true;
@@ -50,7 +51,7 @@ public class PauseMenu : MonoBehaviour
     {
         deathMenuUI.SetActive(true);
         Time.timeScale = 0f;
-        GameIsPaused = true;
+        
     }
 
     public void PlayAgain()
@@ -65,14 +66,14 @@ public class PauseMenu : MonoBehaviour
     {
         Time.timeScale = 1f;
         Debug.Log("Loading Shop...");
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        SceneManager.LoadScene("ShopScene");
     }
 
     public void LoadMenu()
     {
         Time.timeScale = 1f;
         Debug.Log("Loading Menu...");
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+        SceneManager.LoadScene("MenuScene");
     }
 
     public void QuitGame()
