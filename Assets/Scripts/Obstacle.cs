@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Threading;
 using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -25,6 +26,11 @@ public class Obstacle : MonoBehaviour
     public float timeBetweenScore;
 
 
+    public float spawnScaling;
+    public float speedTimer;
+    private float speedTime;
+
+
     private float spawnTime;
     private float scoreTime;
 
@@ -32,9 +38,11 @@ public class Obstacle : MonoBehaviour
     private int score;
     private int seconds;
     private int minutes;
+    private float waitAmount = 0;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI timerText;
     public TextMeshProUGUI moneyText;
+    
 
     void Start()
     {
@@ -44,11 +52,11 @@ public class Obstacle : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Spawn()
+    float Spawn()
     {
-        float randomX = Random.Range(minX, maxX);
+        float randomX = 20f;
         float randomY = Random.Range(minY, maxY);
-        //int randomObstacle = 2;
+        //int randomObstacle = 3;
         int randomObstacle = Random.Range(1, numObstacles + 1);
         Debug.Log(randomObstacle);
 
@@ -58,33 +66,59 @@ public class Obstacle : MonoBehaviour
         //Spawn Spike either facing upwards or downwards
         if (randomObstacle == 1)
         {
-            int upOrDown = Random.Range(1, 3);
+            //int upOrDown = 3;
+            int upOrDown = Random.Range(1, 4);
             Debug.Log(upOrDown);
             //Downwards
             if (upOrDown == 1)
             {
-                Instantiate(spikeGameObject, transform.position + new Vector3(randomX, 34, 0), transform.rotation);
+                Instantiate(spikeGameObject, transform.position + new Vector3(randomX, 46.35f, 0), transform.rotation);
+                
             }
             //Upwards
+            else if (upOrDown == 2){
+                Instantiate(spikeGameObject, transform.position + new Vector3(randomX, -33.4f, 0), Quaternion.Euler(0, 0, 180));
+                
+            }
             else
             {
-                Instantiate(spikeGameObject, transform.position + new Vector3(randomX, -30, 0), Quaternion.Euler(0, 0, 180));
+                StartCoroutine(spawnStalactite(2));
+                return 10;
             }
         }
         //Jellyfish
         else if (randomObstacle == 2)
         {
-            Instantiate(jellyFishGameObject, transform.position + new Vector3(randomX, randomY, 0), transform.rotation);
+            int jellySpawnCondition = Random.Range(0, 2);
+            if(jellySpawnCondition ==0)
+                Instantiate(jellyFishGameObject, transform.position + new Vector3(randomX, randomY, 0), transform.rotation);
+            else
+            {
+                Instantiate(jellyFishGameObject, transform.position + new Vector3(randomX, 56.9f, 0), transform.rotation);
+                Instantiate(jellyFishGameObject, transform.position + new Vector3(randomX, -45.5f, 0), transform.rotation);
+            }
         }
         else if (randomObstacle == 3)
         {
-            Instantiate(mineGameObject, transform.position + new Vector3(randomX, randomY, 0), transform.rotation);
+            int mineSpawnCondition = Random.Range(0, 2);
+            int count = 0;
+            if (mineSpawnCondition == 0)
+                Instantiate(mineGameObject, transform.position + new Vector3(randomX, randomY, 0), transform.rotation);
+            else if (mineSpawnCondition == 1)
+
+                while (count != 10)
+                {
+                    Instantiate(mineGameObject, transform.position + new Vector3(20 + (35*count), 54, 0), transform.rotation);
+                    Instantiate(mineGameObject, transform.position + new Vector3(20 + (35 * count), -42, 0), transform.rotation);
+                    count += 1;
+                }
         }
         else if (randomObstacle == 4)
         {
 
             swordY = player.transform.position.y;
             StartCoroutine(swordfishSpawn(swordY));
+            
 
         }
         else if (randomObstacle == 5)
@@ -92,8 +126,9 @@ public class Obstacle : MonoBehaviour
             Instantiate(coin, transform.position + new Vector3(50, randomY, 0), transform.rotation);
             Instantiate(coin, transform.position + new Vector3(65, randomY, 0), transform.rotation);
             Instantiate(coin, transform.position + new Vector3(80, randomY, 0), transform.rotation);
+            
         }
-
+        return 0;
 
     }
 
@@ -102,8 +137,10 @@ public class Obstacle : MonoBehaviour
     {
         if (Time.time > spawnTime)
         {
-            Spawn();
-            spawnTime = Time.time + timeBetweenSpawn;
+            spawnTime -= waitAmount;
+            StartCoroutine(waitTime(waitAmount));
+            waitAmount = Spawn();
+            spawnTime = Time.time + timeBetweenSpawn + waitAmount;
             timeBetweenSpawn -= 0.05f;
             if (timeBetweenSpawn < 1)
             {
@@ -129,8 +166,9 @@ public class Obstacle : MonoBehaviour
             {
                 timerText.text = "Time: " + minutes + ":" + seconds;
             }
+            spawnScaling += 0.01f;
         }
-
+        
 
     }
 
@@ -151,6 +189,32 @@ public class Obstacle : MonoBehaviour
         Instantiate(swordFishGameObject, transform.position + new Vector3(120, swordY, 0), Quaternion.Euler(0, 180, 0));
 
 
+    }
+
+    IEnumerator spawnStalactite(float time)
+    {
+        bool spawn = true;
+        while (spawn)
+        {
+            Instantiate(spikeGameObject, transform.position + new Vector3(20, 46.35f, 0), transform.rotation);
+            yield return new WaitForSeconds(time);
+            Instantiate(spikeGameObject, transform.position + new Vector3(20, 46.35f, 0), transform.rotation);
+            yield return new WaitForSeconds(time);
+            Instantiate(spikeGameObject, transform.position + new Vector3(20, -33.4f, 0), Quaternion.Euler(0, 0, 180));
+            yield return new WaitForSeconds(time);
+            Instantiate(spikeGameObject, transform.position + new Vector3(20, -33.4f, 0), Quaternion.Euler(0, 0, 180));
+            yield return new WaitForSeconds(time);
+            Instantiate(spikeGameObject, transform.position + new Vector3(20, 46.35f, 0), transform.rotation);
+            yield return new WaitForSeconds(time);
+            Instantiate(spikeGameObject, transform.position + new Vector3(20, 46.35f, 0), transform.rotation);
+            yield return new WaitForSeconds(time);
+            spawn = false;
+        }
+    }
+
+    IEnumerator waitTime(float time)
+    {
+        yield return new WaitForSeconds(time);
     }
 
 
