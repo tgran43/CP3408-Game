@@ -13,6 +13,8 @@ public class Health : MonoBehaviour
     public int coinBalance;
     public GameObject deathMenuUI;
     public int health;
+    private AudioSource moneyAudioSource;
+    private AudioSource hitAudioSource;
 
     [SerializeField] private Image[] hearts;
 
@@ -23,6 +25,8 @@ public class Health : MonoBehaviour
         moneyText = GameObject.Find("Money").GetComponent<TextMeshProUGUI>();
         moneyText.text = "" + coinBalance;
         playerHealth = PlayerPrefs.GetInt("Health");
+        moneyAudioSource = GameObject.Find("coinSound").GetComponent<AudioSource>();
+        hitAudioSource = GameObject.Find("hitSound").GetComponent<AudioSource>();
     }
 
     public void UpdateHealth()
@@ -58,12 +62,14 @@ public class Health : MonoBehaviour
         {
             coinBalance = coinBalance + 1;
             moneyText.text = "" + coinBalance;
+            moneyAudioSource.Play();
             SaveGame();
         }
     }
 
     public void HealthDamage()
-    {
+    {   
+        hitAudioSource.Play();
         playerHealth -= 1;
         UpdateHealth();
     }
