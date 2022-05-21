@@ -69,6 +69,7 @@
     <Compile Include="Assets\Scripts\Drive.cs" />
     <Compile Include="Assets\Scripts\damageMine.cs" />
     <Compile Include="Assets\Scripts\ShopMenu.cs" />
+    <Compile Include="Assets\Scripts\ResetData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

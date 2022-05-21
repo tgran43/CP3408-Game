@@ -13,7 +13,7 @@ public class MainMenu : MonoBehaviour
             PlayerPrefs.SetInt("Coins", 1000);
             PlayerPrefs.SetFloat("Speed", 50);
             PlayerPrefs.SetInt("SpeedCost", 20);
-            PlayerPrefs.SetInt("Health",8);
+            PlayerPrefs.SetInt("Health",5);
             PlayerPrefs.SetInt("FirstLoad",1);
         }
         
