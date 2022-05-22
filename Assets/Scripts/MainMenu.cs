@@ -10,13 +10,13 @@ public class MainMenu : MonoBehaviour
     {
         if (PlayerPrefs.GetInt("FirstLoad") == 0)
         {
-            PlayerPrefs.SetInt("Coins", 1000);
+            PlayerPrefs.SetInt("Coins", 0);
             PlayerPrefs.SetFloat("Speed", 50);
             PlayerPrefs.SetInt("SpeedCost", 20);
             PlayerPrefs.SetInt("Health",5);
             PlayerPrefs.SetInt("FirstLoad",1);
         }
-        
+        PlayerPrefs.SetInt("Health", 5);
     }
     public void PlayGame()
     {

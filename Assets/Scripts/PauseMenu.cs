@@ -20,7 +20,6 @@ public class PauseMenu : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Debug.Log("jsedhgfkjshbfkjsdh");
             Debug.Log(GameIsPaused);
             if (GameIsPaused)
             {
